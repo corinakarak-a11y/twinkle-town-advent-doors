@@ -1,0 +1,61 @@
+// Songs for the December 1 gift. Add a cover image URL, an audio file URL and lyrics
+// to any song below; anything left empty shows a placeholder.
+export type Song = { title: string; artist: string; cover?: string; audio?: string; lyrics?: string };
+
+export const SONGS: Song[] = [
+  { title: "La vie en Rose", artist: "Edith Piaf" },
+  { title: "Honeybee", artist: "Olivia Rodrigo" },
+  { title: "Cant Help Falling in love", artist: "Elvis Presley" },
+  { title: "Stupid Song", artist: "Olivia Rodrigo" },
+  { title: "I Will", artist: "The Beatles" },
+  { title: "U + Me = <3", artist: "Olivia Rodrigo" },
+  { title: "Bless the telephone", artist: "Labi Siffre" },
+  { title: "Over country", artist: "Lizzy McAlpine" },
+  { title: "Only You", artist: "Yazoo" },
+  { title: "Imagine That Now", artist: "Matilda Mann" },
+  { title: "Pictures of You", artist: "The Cure" },
+  { title: "There’s no way", artist: "Lauv" },
+  { title: "Lovesong", artist: "The Cure" },
+  { title: "Dress", artist: "Taylor Swift" },
+  { title: "Friday I’m in Love", artist: "The Cure" },
+  { title: "Like People Do", artist: "Hozier" },
+  { title: "You’ve got a friend in me", artist: "Randy Newman" },
+  { title: "Restless Little Heart", artist: "The Favors" },
+  { title: "Say Yes", artist: "Elliott Smith" },
+  { title: "Ordinary People", artist: "The Favors" },
+  { title: "Mr brightside", artist: "The Killers" },
+  { title: "Lover Girl", artist: "Laufey" },
+  { title: "Running on Sunshine", artist: "Golden Age" },
+  { title: "Packing it up", artist: "Gracie Abrams" },
+  { title: "You are my sunshine", artist: "Christina Perri" },
+  { title: "Tell me that I’m wrong", artist: "Matilda Mann" },
+  { title: "Pancakes for Dinner", artist: "Lizzy McAlpine" },
+  { title: "Nothing", artist: "Bruno Major" },
+  { title: "Whatever you like", artist: "Dove Cameron" },
+  { title: "The Bruise", artist: "Damiano David" },
+  { title: "While you were sleeping", artist: "Laufey" },
+  { title: "Sick of Myself", artist: "Damiano David" },
+  { title: "If not for you", artist: "Måneskin" },
+  { title: "Delicate", artist: "Taylor Swift" },
+  { title: "Pensar en Ti", artist: "Ganges" },
+  { title: "Risk", artist: "Gracie Abrams" },
+  { title: "Everyone Adores You", artist: "Matt Maltese" },
+  { title: "Let it Happen", artist: "Gracie Abrams" },
+  { title: "Glue Song", artist: "Beabadoobee" },
+  { title: "Melting", artist: "Kali Uchis" },
+  { title: "Dying is a beautiful thing to do", artist: "Easha" },
+  { title: "I Like Me Better", artist: "Lauv" },
+  { title: "Best Friend", artist: "Conan Gray" },
+  { title: "True Blue", artist: "Boygenius" },
+  { title: "Best Friend", artist: "Laufey" },
+  { title: "Invisible string", artist: "Taylor Swift" },
+  { title: "Ur so pretty", artist: "Wasia Project" },
+  { title: "Nobody Gets Me", artist: "SZA" },
+  { title: "La Circuela", artist: "Nico Play" },
+  { title: "Paraponaki Mou", artist: "Andromache" },
+];
+
+/** Background hue per song, used until a cover is added. Spread evenly round the colour wheel. */
+export function songHue(index: number): number {
+  return Math.round((index * 137.508) % 360);
+}
