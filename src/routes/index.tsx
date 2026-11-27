@@ -2,7 +2,8 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Snowfall } from "@/components/advent/Snowfall";
 import { Lock } from "@/components/advent/Lock";
-import { GATE_KEY, PASSWORD } from "@/lib/advent";
+import { GATE_KEY } from "@/lib/advent";
+import { isCorrect, hintFor, findPieces } from "@/lib/password-hints";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,17 +24,22 @@ function Gate() {
   const [pw, setPw] = useState("");
   const [state, setState] = useState<"idle" | "wrong" | "open">("idle");
   const [leaving, setLeaving] = useState(false);
+  const [hint, setHint] = useState("");
+  const [genericMisses, setGenericMisses] = useState(0);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (state === "open") return;
-    if (pw.trim().toLowerCase() === PASSWORD) {
+    if (isCorrect(pw)) {
+      setHint("");
       setState("open");
       sessionStorage.setItem(GATE_KEY, "1");
       setTimeout(() => setLeaving(true), 1000);
       setTimeout(() => navigate({ to: "/calendar" }), 1800);
     } else {
       setState("wrong");
+      setHint(hintFor(pw, genericMisses));
+      if (findPieces(pw).length === 0) setGenericMisses((n) => n + 1);
       setTimeout(() => setState("idle"), 450);
     }
   };
@@ -61,6 +67,7 @@ function Gate() {
               Unlock
             </button>
           </form>
+          <p role="status" aria-live="polite" className="min-h-12 -mt-4 text-center font-ui text-base italic text-snow/80">{hint}</p>
         </div>
       </div>
     </main>

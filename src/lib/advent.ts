@@ -1,6 +1,6 @@
 // Doors unlock at 08:00 Vienna time (CET, UTC+1 in December) = 07:00 UTC.
 export const ADVENT_YEAR = 2026;
-export const PASSWORD = "hello";
+export const PASSWORD = "ilovemylittlenerd";
 
 export function unlockTime(day: number, year = ADVENT_YEAR): number {
   return Date.UTC(year, 11, day, 7, 0, 0);
