@@ -1,7 +1,7 @@
 import { Link, createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { StarField } from "@/components/advent/StarField";
-import { GATE_KEY, PREVIEW_KEY, SPECIAL_DAYS, isUnlocked } from "@/lib/advent";
+import { GATE_KEY, SPECIAL_DAYS, isUnlocked } from "@/lib/advent";
 import { getDayContent } from "@/lib/advent-content";
 import { SongsGift } from "@/components/songs/SongsGift";
 
@@ -36,9 +36,8 @@ function DayPage() {
   const special = SPECIAL_DAYS.has(day);
 
   useEffect(() => {
-    const preview = localStorage.getItem(PREVIEW_KEY) === "1";
     if (sessionStorage.getItem(GATE_KEY) !== "1") navigate({ to: "/" });
-    else if (!isUnlocked(day, Date.now(), preview)) navigate({ to: "/calendar" });
+    else if (!isUnlocked(day, Date.now())) navigate({ to: "/calendar" });
     else setOk(true);
   }, [day, navigate]);
 

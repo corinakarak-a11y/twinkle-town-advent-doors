@@ -32,6 +32,6 @@ use the editor.
 ## Advent calendar
 - Unlock schedule lives in src/lib/advent.ts (08:00 Vienna = 07:00 UTC in December); keep logic pure so tests in src/test/advent.test.ts cover it.
 - Day copy lives in src/lib/advent-content.ts so the owner can edit surprises without touching routes.
-- Gate and preview override are client-side storage flags (no backend); preview toggles by tapping "2026" five times.
+- Gate and preview override are client-side storage flags (no backend); no preview mode (owner removed it).
 - December 1 song gift data (titles, covers, audio, lyrics) lives in src/lib/songs.ts so the owner adds files without touching UI.
 - Gate password + keyword hints live in src/lib/password-hints.ts (pure, tested in src/test/password-hints.test.ts); check ignores case and spaces.

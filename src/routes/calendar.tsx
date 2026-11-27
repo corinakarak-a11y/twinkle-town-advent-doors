@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { StarField } from "@/components/advent/StarField";
-import { DOOR_ORDER, GATE_KEY, PREVIEW_KEY, SPECIAL_DAYS, countdown, isUnlocked, nextLockedDay } from "@/lib/advent";
+import { DOOR_ORDER, GATE_KEY, SPECIAL_DAYS, countdown, isUnlocked, nextLockedDay } from "@/lib/advent";
 
 export const Route = createFileRoute("/calendar")({
   head: () => ({
@@ -30,32 +30,17 @@ function useNow() {
 function CalendarPage() {
   const navigate = useNavigate();
   const now = useNow();
-  const [preview, setPreview] = useState(false);
   const [peek, setPeek] = useState<number | null>(null);
   const [opening, setOpening] = useState<number | null>(null);
   const [shaking, setShaking] = useState<number | null>(null);
-  const taps = useRef<number[]>([]);
 
   useEffect(() => {
     if (sessionStorage.getItem(GATE_KEY) !== "1") navigate({ to: "/" });
-    setPreview(localStorage.getItem(PREVIEW_KEY) === "1");
   }, [navigate]);
-
-  // Hidden owner toggle: tap "2026" five times quickly.
-  const secretTap = () => {
-    const t = Date.now();
-    taps.current = [...taps.current.filter((x) => t - x < 2000), t];
-    if (taps.current.length >= 5) {
-      taps.current = [];
-      const next = !preview;
-      setPreview(next);
-      localStorage.setItem(PREVIEW_KEY, next ? "1" : "0");
-    }
-  };
 
   const clickDoor = (day: number) => {
     if (now === null || opening) return;
-    if (isUnlocked(day, now, preview)) {
+    if (isUnlocked(day, now)) {
       setOpening(day);
       setTimeout(() => navigate({ to: "/day/$day", params: { day: String(day) } }), 850);
     } else {
@@ -72,18 +57,17 @@ function CalendarPage() {
       <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center px-4 pb-16 pt-12 sm:pt-16">
         <header className="animate-rise-in max-w-xl text-center">
           <h1 className="font-display text-4xl font-semibold uppercase leading-none tracking-[0.08em] sm:text-6xl">
-            A Day Closer to Christmas <span onClick={secretTap} className="cursor-default select-none text-gold">2026</span>
+            A Day Closer to Christmas <span className="cursor-default select-none text-gold">2026</span>
           </h1>
           <p className="parchment mx-auto mt-6 max-w-lg rotate-[-0.6deg] px-6 py-5 text-left font-ui text-sm italic leading-relaxed text-wine-deep sm:px-8 sm:text-base">
             Even a little Grinch like you, who insists on hating Christmas, deserves a little joy and attention this time of year, if only because you are so terribly adored by me that I simply cannot allow you to miss out on being reminded of it.
           </p>
-          {preview && <p className="mt-3 font-ui text-xs uppercase tracking-widest text-gold">Preview mode · all doors open</p>}
         </header>
 
         <House>
           <div className="grid grid-cols-5 gap-2 sm:gap-3">
             {DOOR_ORDER.map((day) => {
-              const open = now !== null && isUnlocked(day, now, preview);
+              const open = now !== null && isUnlocked(day, now);
               const special = SPECIAL_DAYS.has(day);
               return (
                 <button key={day} onClick={() => clickDoor(day)} aria-label={`December ${day}${open ? "" : ", locked"}`}

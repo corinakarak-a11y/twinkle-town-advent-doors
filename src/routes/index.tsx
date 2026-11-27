@@ -57,11 +57,8 @@ function Gate() {
               <input
                 type="text" autoComplete="off" autoCapitalize="none" spellCheck={false} aria-label="Password"
                 value={pw} onChange={(e) => setPw(e.target.value)}
-                className="w-full bg-transparent font-ui text-lg tracking-[0.3em] text-transparent caret-midnight outline-hidden"
+                className="w-full bg-transparent font-ui text-lg tracking-[0.1em] text-midnight caret-midnight outline-hidden"
               />
-              <span aria-hidden className="pointer-events-none absolute inset-0 flex items-center overflow-hidden whitespace-nowrap font-ui text-lg tracking-[0.3em] text-midnight">
-                {"★".repeat(pw.length)}
-              </span>
             </div>
             <button type="submit" className="shrink-0 rounded-full bg-midnight px-5 py-2.5 font-display text-lg font-semibold uppercase tracking-widest text-snow transition hover:brightness-125 active:scale-95">
               Unlock
